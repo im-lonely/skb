@@ -9,6 +9,8 @@ export default {
   usage: "<members> <reason>",
   description: "Unban users for the specified reason. The reason is required.",
   execute(message, args, client) {
+    if (!message.member?.hasPermission("BAN_MEMBERS")) return;
+
     const members = parseMembers(args, message);
 
     if (!members) return message.channel.send("I couldn't find the users!");

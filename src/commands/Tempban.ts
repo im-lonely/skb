@@ -3,11 +3,12 @@ import Discord from "discord.js";
 import parseMembers from "../parseMembers";
 
 export default {
-  name: "ban",
-  aliases: ["hammer"],
+  name: "tempban",
+  aliases: ["temphammer"],
   args: true,
-  usage: "<members> [reason]",
-  description: "Ban users for the specified reason. Default reason is `None`.",
+  usage: "<members> [days] [reason]",
+  description:
+    "Ban users for the specified reason, for a set amount of days. Default reason is `None`.",
   execute(message, args, client) {
     if (!message.member?.hasPermission("BAN_MEMBERS")) return;
 
@@ -15,36 +16,39 @@ export default {
 
     if (!members) return message.channel.send("I couldn't find the users!");
 
+    const days = parseInt(args.slice(1)[0]);
+
     const reason = args.slice(members.length).join(" ") || "None";
 
-    let bannedUsers = 0;
-    let couldntBan: string[] = [];
+    let tempbannedUsers = 0;
+    let couldntTempban: string[] = [];
 
     members.forEach((member) => {
       member
         ?.ban({
           reason,
+          days,
         })
         .then(() => {
-          bannedUsers++;
+          tempbannedUsers++;
         })
         .catch(() => {
-          couldntBan.push(member.user.tag);
+          couldntTempban.push(member.user.tag);
         });
     });
 
     const embed = new Discord.MessageEmbed()
-      .setTitle("🔨 B A N N E D 🔨")
+      .setTitle("⌛ T E M P B A N N E D ⌛")
       .setFooter(message.author.tag)
-      .setDescription(`Banned ${bannedUsers} users for \`${reason}\``)
+      .setDescription(`Tempbanned ${tempbannedUsers} users for \`${reason}\``)
       .addField(
-        "Banned users",
+        "Tempbanned users",
         members.map((member) => member?.user.tag).join("\n")
       )
       .setColor("RANDOM");
 
-    if (couldntBan.length)
-      embed.addField("Failed to ban", couldntBan.join("\n"));
+    if (couldntTempban.length)
+      embed.addField("Failed to tempban", couldntTempban.join("\n"));
 
     message.channel.send(embed);
   },

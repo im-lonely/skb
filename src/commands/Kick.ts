@@ -9,6 +9,8 @@ export default {
   usage: "<members> [reason]",
   description: "Kick users for the specified reason. Default reason is `None`.",
   execute(message, args, client) {
+    if (!message.member?.hasPermission("KICK_MEMBERS")) return;
+
     const members = parseMembers(args, message);
 
     if (!members) return message.channel.send("I couldn't find the users!");
