@@ -1,12 +1,12 @@
 import { Command } from "../types";
 import Discord from "discord.js";
-import parseMembers from "../parseMembers";
+import parseMembers from "../utils/parseMembers";
 
 export default {
   name: "tempban",
   aliases: ["temphammer"],
   args: true,
-  usage: "<members> [days] [reason]",
+  usage: "<members> <days> [reason]",
   description:
     "Ban users for the specified reason, for a set amount of days. Default reason is `None`.",
   execute(message, args, client) {

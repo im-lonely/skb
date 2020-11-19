@@ -1,6 +1,6 @@
 import { Command } from "../types";
 import Discord from "discord.js";
-import parseMembers from "../parseMembers";
+import parseMembers from "../utils/parseMembers";
 
 export default {
   name: "kick",

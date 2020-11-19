@@ -4,7 +4,7 @@ export default {
   name: "clear",
   aliases: ["purge", "clean"],
   args: true,
-  usage: "[amount]",
+  usage: "<amount>",
   description: "Cleans the current channel by clearing messages",
   execute(message, args, client) {
     const amount = Number(args[0]);

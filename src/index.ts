@@ -27,11 +27,21 @@ client.on("ready", () => {
   client.user?.setActivity({ type: "WATCHING", name: " over the server" });
 });
 
+const capsPercent = (string: string) =>
+  string.split("").filter((char) => char === char.toUpperCase()).length /
+  string.length;
+
 client.on("message", async (message) => {
   if (message.author.bot) return;
   //@ts-ignore – parentID exists
   if (message.guild && message.channel.parentID !== "777930243049783317") {
     if (!message.content.startsWith(prefix)) return;
+
+    if (capsPercent(message.content) > 0.9)
+      message.delete({ reason: "Too many caps" });
+
+    if (message.content.includes("discord.gg/" || "discordapp.com/invite/"))
+      message.delete({ reason: "Invite links are not allowed" });
 
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift()!.toLowerCase();

@@ -1,6 +1,6 @@
 import { Command } from "../types";
 import Discord from "discord.js";
-import parseMembers from "../parseMembers";
+import parseMembers from "../utils/parseMembers";
 
 export default {
   name: "unban",
@@ -24,7 +24,7 @@ export default {
 
     members.forEach((member) => {
       message.guild?.members
-        .unban(member?.id!)
+        .unban(member?.id!, reason)
         .then(() => {
           unbannedUsers++;
         })
