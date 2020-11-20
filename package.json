@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/cursorsdottsx/kingdom-support-bot#readme",
   "dependencies": {
-    "discord.js": "^12.4.1"
+    "@types/ms": "^0.7.31",
+    "discord.js": "^12.4.1",
+    "ms": "^2.1.2"
   }
 }

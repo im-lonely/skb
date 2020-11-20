@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import Discord from "discord.js";
-import { token, prefix } from "./config.json";
+import { token, prohibitedWords, prefix } from "./config.json";
 import Command from "./Type.Command";
 
 const failsRef = {
@@ -43,6 +43,58 @@ client.on("error", (err: any) => {
 client.on("ready", () => {
   console.log("Ready!");
   client.user?.setActivity(activities[activity]);
+  if (
+    !client.guilds.cache
+      .get("773486815457574913")
+      ?.roles.cache.find((r) => r.name === "Muted")
+  ) {
+    client.guilds.cache
+      .get("773486815457574913")
+      ?.roles.create({
+        data: {
+          color: "#777777",
+          name: "Muted",
+          mentionable: false,
+          hoist: false,
+        },
+        reason: "Set up muted role",
+      })
+      .then((role) => {
+        client.guilds.cache
+          .get("773486815457574913")
+          ?.channels.cache.forEach((c) => {
+            c.overwritePermissions([
+              {
+                id: role.id,
+                deny: ["SEND_MESSAGES"],
+              },
+            ]);
+          });
+
+        role.setPosition(3, { reason: "Override permissions" });
+      });
+  } else {
+    const muted = client.guilds.cache
+      .get("773486815457574913")
+      ?.roles.cache.find((r) => r.name === "Muted")!;
+
+    client.guilds.cache
+      .get("773486815457574913")
+      ?.channels.cache.forEach((c) => {
+        c.overwritePermissions(
+          [
+            {
+              id: muted.id,
+              deny: ["SEND_MESSAGES"],
+            },
+          ],
+          "Set up muted role"
+        );
+      });
+
+    muted.setPosition(3, { reason: "Override permissions" });
+  }
+
   setInterval(() => {
     client.user?.setActivity(
       activities[++activity > activities.length - 1 ? (activity = 0) : activity]
@@ -57,15 +109,59 @@ const capsPercent = (string: string) =>
 client.on("message", async (message) => {
   if (message.author.bot) return;
 
+  prohibitedWords.forEach((word) => {
+    if (message.content.includes(word))
+      message.delete({ reason: "Using slurs" });
+  });
+
   //@ts-ignore – parentID exists
   if (message.guild && message.channel.parentID !== "777930243049783317") {
-    if (!message.content.startsWith(prefix)) return;
+    if (message.content.includes("discord.gg/" || "discordapp.com/invite/"))
+      message.delete({ reason: "Invite links are not allowed" });
 
     if (capsPercent(message.content) > 0.9)
       message.delete({ reason: "Too many caps" });
 
-    if (message.content.includes("discord.gg/" || "discordapp.com/invite/"))
-      message.delete({ reason: "Invite links are not allowed" });
+    message.channel
+      .awaitMessages(
+        (newMessage: Discord.Message) =>
+          newMessage.content.includes(message.content) ||
+          (message.content.includes(newMessage.content) &&
+            newMessage.content.length > 6 &&
+            message.content.length > 6 &&
+            message.author.id === newMessage.author.id &&
+            !message.member?.hasPermission([
+              "ADMINISTRATOR",
+              "MANAGE_MESSAGES",
+              "BAN_MEMBERS",
+              "KICK_MEMBERS",
+              "MANAGE_GUILD",
+            ])),
+        {
+          max: 1,
+          time: 5000,
+        }
+      )
+      .then((collected) => {
+        collected.forEach((msg) => {
+          msg.delete({
+            reason: "Suspected spamming",
+          });
+          message.member?.roles.add("Muted", "User muted for spamming");
+          message.author.send(
+            "You have been muted for 5 minutes for spamming, if you think you have been unrightfully muted contact staff."
+          );
+          setTimeout(() => {
+            message.member?.roles.remove("Muted", "User unmuted");
+          }, 300000);
+        });
+      })
+      .catch((err) => {
+        failsRef.current++;
+        console.error(err);
+      });
+
+    if (!message.content.startsWith(prefix)) return;
 
     const args = message.content.slice(prefix.length).trim().split(/ +/);
     const commandName = args.shift()!.toLowerCase();
@@ -88,8 +184,8 @@ client.on("message", async (message) => {
 
     try {
       command.execute(message, args, client);
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
       message.reply(
         "Something went wrong! Contact `[Cursors]#9257` for troubleshooting!"
       );
@@ -170,6 +266,7 @@ client.on("message", async (message) => {
         ?.channels.cache.filter((channel) => channel.type === "text")!
         //@ts-ignore – all channels left are text channels
         .find((channel) => channel.topic === message.author.id)!
+        //@ts-ignore – all channels left are text channels
         .send(
           //@ts-ignore – This is a text channel
           new Discord.MessageEmbed()
