@@ -1,6 +1,7 @@
-import { Command } from "../types";
+import Command from "../Command";
 import Discord from "discord.js";
 import parseMembers from "../utils/parseMembers";
+import failsRef from "..";
 
 export default {
   name: "kick",
@@ -27,6 +28,7 @@ export default {
           kickedUsers++;
         })
         .catch(() => {
+          failsRef.current++;
           couldntKick.push(member.user.tag);
         });
     });

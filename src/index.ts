@@ -2,9 +2,27 @@ import fs from "fs";
 import path from "path";
 import Discord from "discord.js";
 import { token, prefix } from "./config.json";
-import { Command } from "./types";
+import Command from "./Command";
 
-export const client = new Discord.Client();
+const failsRef = {
+  current: 0,
+};
+
+const activities: Discord.ActivityOptions[] = [
+  { type: "WATCHING", name: " over the server" },
+  {
+    type: "CUSTOM_STATUS",
+    name: `My prefix is ${prefix}`,
+  },
+  {
+    type: "PLAYING",
+    name: " some games",
+  },
+];
+
+let activity = 0;
+
+const client = new Discord.Client();
 client.commands = new Discord.Collection<string, Command>();
 
 const commandFiles = fs
@@ -24,7 +42,12 @@ client.on("error", (err: any) => {
 
 client.on("ready", () => {
   console.log("Ready!");
-  client.user?.setActivity({ type: "WATCHING", name: " over the server" });
+  client.user?.setActivity(activities[activity]);
+  setInterval(() => {
+    client.user?.setActivity(
+      activities[++activity > activities.length - 1 ? (activity = 0) : activity]
+    );
+  }, 60000);
 });
 
 const capsPercent = (string: string) =>
@@ -33,6 +56,7 @@ const capsPercent = (string: string) =>
 
 client.on("message", async (message) => {
   if (message.author.bot) return;
+
   //@ts-ignore – parentID exists
   if (message.guild && message.channel.parentID !== "777930243049783317") {
     if (!message.content.startsWith(prefix)) return;
@@ -81,8 +105,13 @@ client.on("message", async (message) => {
             .setFooter(message.author.tag)
             .setTimestamp(message.createdAt)
             .setColor("RANDOM")
-        );
-      message.channel.delete();
+        )
+        .catch(() => {
+          failsRef.current++;
+        });
+      message.channel.delete().catch(() => {
+        failsRef.current++;
+      });
     }
 
     client.users.cache
@@ -99,6 +128,7 @@ client.on("message", async (message) => {
         message.channel.send("Successfully sent!");
       })
       .catch(() => {
+        failsRef.current++;
         message.channel.send("mail fail :(");
       });
   } else {
@@ -131,6 +161,7 @@ client.on("message", async (message) => {
           message.channel.send("Successfully sent!");
         })
         .catch(() => {
+          failsRef.current++;
           message.channel.send("mail fail :(");
         });
     } else {
@@ -152,6 +183,7 @@ client.on("message", async (message) => {
           message.channel.send("Successfully sent!");
         })
         .catch(() => {
+          failsRef.current++;
           message.channel.send("mail fail :(");
         });
     }
@@ -159,3 +191,5 @@ client.on("message", async (message) => {
 });
 
 client.login(token);
+
+export default failsRef;

@@ -1,6 +1,7 @@
-import { Command } from "../types";
+import Command from "../Command";
 import Discord from "discord.js";
 import parseMembers from "../utils/parseMembers";
+import failsRef from "..";
 
 export default {
   name: "tempban",
@@ -33,6 +34,7 @@ export default {
           tempbannedUsers++;
         })
         .catch(() => {
+          failsRef.current++;
           couldntTempban.push(member.user.tag);
         });
     });

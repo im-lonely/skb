@@ -1,6 +1,6 @@
 import Discord from "discord.js";
 
-export type Command = {
+type Command = {
   name: string;
   aliases: string[];
   description: string;
@@ -12,3 +12,5 @@ export type Command = {
     client: Discord.Client
   ): any;
 };
+
+export default Command;

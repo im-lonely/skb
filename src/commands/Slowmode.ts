@@ -1,4 +1,5 @@
-import { Command } from "../types";
+import failsRef from "..";
+import Command from "../Command";
 
 export default {
   name: "slowmode",
@@ -22,6 +23,8 @@ export default {
       return message.channel.send("Enter an amount greater than 1");
 
     //@ts-ignore – This method exists, checked index.d.ts
-    message.channel.setRateLimitPerUser(seconds, reason);
+    message.channel.setRateLimitPerUser(seconds, reason).catch(() => {
+      failsRef.current++;
+    });
   },
 } as Command;

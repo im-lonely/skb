@@ -1,11 +1,12 @@
-import { Command } from "../types";
+import failsRef from "..";
+import Command from "../Command";
 
 export default {
   name: "clear",
   aliases: ["purge", "clean"],
   args: true,
   usage: "<amount>",
-  description: "Cleans the current channel by clearing messages",
+  description: "Cleans the current channel by clearing messages.",
   execute(message, args, client) {
     const amount = Number(args[0]);
 
@@ -33,6 +34,7 @@ export default {
         message.channel.send(`I have deleted ${amount} messages!`);
       })
       .catch(() => {
+        failsRef.current++;
         message.channel.send("Failed to delete some messages!");
       });
   },

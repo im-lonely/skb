@@ -1,6 +1,7 @@
-import { Command } from "../types";
+import Command from "../Command";
 import { prefix } from "../config.json";
 import Discord from "discord.js";
+import failsRef from "..";
 
 export default {
   name: "help",
@@ -8,7 +9,7 @@ export default {
   args: false,
   usage: "[command]",
   description:
-    "Displays all commands and info on a specific command if specified",
+    "Displays all commands and info on a specific command if specified.",
   execute(message, args, client) {
     const { commands } = client;
 
@@ -29,7 +30,8 @@ export default {
           message.react("✅");
         })
         .catch(() => {
-          "Couldn't send the message. Do you have DMs disabled?";
+          failsRef.current++;
+          ("Couldn't send the message. Do you have DMs disabled?");
         });
     }
 
