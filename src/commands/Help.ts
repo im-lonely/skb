@@ -40,22 +40,21 @@ export default {
       commands.get(name) ||
       commands.find((c) => c.aliases && c.aliases.includes(name));
 
-    if (!command) {
-      return message.reply(`Couldn't find the command \`${name}\`!`);
-    }
+    if (!command)
+      return message.channel.send(`Couldn't find the command \`${name}\`!`);
 
-    message.channel.send(
+    return message.channel.send(
       new Discord.MessageEmbed()
         .setTitle(`Info for ${command.name}`)
+        .setDescription(
+          `Arguments wrapped in \`<>\` are required and arguments wrapped in \`[]\` are optional.`
+        )
         .addField("Aliases", command.aliases.join("\n"))
         .addField("Description", command.description)
         .addField("Usage", `\`${prefix}${command.name} ${command.usage}\``)
         .setColor("RANDOM")
         .setFooter(client.user?.tag)
         .setTimestamp(message.createdAt)
-        .setDescription(
-          `Arguments wrapped in \`<>\` are required and arguments wrapped in \`[]\` are optional.`
-        )
     );
   },
 } as Command;

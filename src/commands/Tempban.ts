@@ -52,6 +52,6 @@ export default {
     if (couldntTempban.length)
       embed.addField("Failed to tempban", couldntTempban.join("\n"));
 
-    message.channel.send(embed);
+    return message.channel.send(embed);
   },
 } as Command;

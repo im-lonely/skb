@@ -48,6 +48,6 @@ export default {
     if (couldntUnban.length)
       embed.addField("Failed to unban", couldntUnban.join("\n"));
 
-    message.channel.send(embed);
+    return message.channel.send(embed);
   },
 } as Command;

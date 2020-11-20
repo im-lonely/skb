@@ -48,6 +48,6 @@ export default {
     if (couldntBan.length)
       embed.addField("Failed to ban", couldntBan.join("\n"));
 
-    message.channel.send(embed);
+    return message.channel.send(embed);
   },
 } as Command;

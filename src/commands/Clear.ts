@@ -25,7 +25,7 @@ export default {
       //@ts-ignore – This is command is only used in a guild
       promises.push(message.channel.bulkDelete(100));
 
-    Promise.all(promises)
+    return Promise.all(promises)
       .then(() => {
         //@ts-ignore – This command is only used in a guild
         message.channel.bulkDelete(leftOver);

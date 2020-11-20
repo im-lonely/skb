@@ -22,9 +22,14 @@ export default {
     if (seconds < 2)
       return message.channel.send("Enter an amount greater than 1");
 
-    //@ts-ignore – This method exists, checked index.d.ts
-    message.channel.setRateLimitPerUser(seconds, reason).catch(() => {
-      failsRef.current++;
-    });
+    message.channel
+      //@ts-ignore – This method exists, checked index.d.ts
+      .setRateLimitPerUser(seconds, reason)
+      .then(() => {
+        message.channel.send("Slowmode successfully set!");
+      })
+      .catch(() => {
+        failsRef.current++;
+      });
   },
 } as Command;

@@ -46,6 +46,6 @@ export default {
     if (couldntKick.length)
       embed.addField("Failed to kick", couldntKick.join("\n"));
 
-    message.channel.send(embed);
+    return message.channel.send(embed);
   },
 } as Command;
