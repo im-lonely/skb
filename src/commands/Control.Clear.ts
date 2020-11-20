@@ -8,6 +8,8 @@ export default {
   usage: "<amount>",
   description: "Cleans the current channel by clearing messages.",
   execute(message, args, client) {
+    if (!message.member?.hasPermission("MANAGE_MESSAGES")) return;
+
     const amount = Number(args[0]);
 
     if (Number.isNaN(amount) || !amount || amount === null)
