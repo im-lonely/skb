@@ -1,9 +1,9 @@
 import failsRef from "..";
-import Command from "../Command";
+import Command from "../Type.Command";
 
 export default {
-  name: "slowmode",
-  aliases: ["ratelimit"],
+  name: "limit",
+  aliases: ["slowmode", "ratelimit"],
   args: true,
   usage: "<seconds> [reason]",
   description: "Sets a slowmode in seconds. Default reason is `None`",

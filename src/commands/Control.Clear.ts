@@ -1,5 +1,5 @@
 import failsRef from "..";
-import Command from "../Command";
+import Command from "../Type.Command";
 
 export default {
   name: "clear",

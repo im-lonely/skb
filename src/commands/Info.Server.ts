@@ -1,6 +1,6 @@
 import Discord from "discord.js";
-import Command from "../Command";
-import parseCase from "../utils/parseCase";
+import Command from "../Type.Command";
+import parseCase from "../utils/Parse.Case";
 
 export default {
   name: "serverinfo",

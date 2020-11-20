@@ -1,6 +1,6 @@
-import Command from "../Command";
+import Command from "../Type.Command";
 import Discord from "discord.js";
-import parseMembers from "../utils/parseMembers";
+import parseMembers from "../utils/Parse.Members";
 import failsRef from "..";
 
 export default {

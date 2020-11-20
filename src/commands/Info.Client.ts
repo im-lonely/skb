@@ -1,6 +1,6 @@
 import Discord from "discord.js";
-import Command from "../Command";
-import parseList from "../utils/parseList";
+import Command from "../Type.Command";
+import parseList from "../utils/Parse.List";
 import { prefix } from "../config.json";
 import pkg from "../../package.json";
 import failsRef from "..";

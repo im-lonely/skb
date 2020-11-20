@@ -1,4 +1,4 @@
-import Command from "../Command";
+import Command from "../Type.Command";
 import { prefix } from "../config.json";
 import Discord from "discord.js";
 import failsRef from "..";

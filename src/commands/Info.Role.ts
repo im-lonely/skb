@@ -1,8 +1,8 @@
 import Discord from "discord.js";
-import Command from "../Command";
-import parseCase from "../utils/parseCase";
-import parseRoles from "../utils/parseRoles";
-import parseTrim from "../utils/parseTrim";
+import Command from "../Type.Command";
+import parseCase from "../utils/Parse.Case";
+import parseRoles from "../utils/Parse.Roles";
+import parseTrim from "../utils/Parse.Trim";
 
 export default {
   name: "roleinfo",

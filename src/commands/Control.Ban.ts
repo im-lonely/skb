@@ -1,16 +1,16 @@
-import Command from "../Command";
+import Command from "../Type.Command";
 import Discord from "discord.js";
-import parseMembers from "../utils/parseMembers";
+import parseMembers from "../utils/Parse.Members";
 import failsRef from "..";
 
 export default {
-  name: "kick",
-  aliases: ["boot"],
+  name: "ban",
+  aliases: ["hammer"],
   args: true,
   usage: "<members> [reason]",
-  description: "Kick users for the specified reason. Default reason is `None`.",
+  description: "Ban users for the specified reason. Default reason is `None`.",
   execute(message, args, client) {
-    if (!message.member?.hasPermission("KICK_MEMBERS")) return;
+    if (!message.member?.hasPermission("BAN_MEMBERS")) return;
 
     const members = parseMembers(args, message);
 
@@ -18,33 +18,35 @@ export default {
 
     const reason = args.slice(members.length).join(" ") || "None";
 
-    let kickedUsers = 0;
-    let couldntKick: string[] = [];
+    let bannedUsers = 0;
+    let couldntBan: string[] = [];
 
     members.forEach((member) => {
       member
-        ?.kick(reason)
+        ?.ban({
+          reason,
+        })
         .then(() => {
-          kickedUsers++;
+          bannedUsers++;
         })
         .catch(() => {
           failsRef.current++;
-          couldntKick.push(member.user.tag);
+          couldntBan.push(member.user.tag);
         });
     });
 
     const embed = new Discord.MessageEmbed()
-      .setTitle("👢 K I C K E D 👢")
+      .setTitle("🔨 B A N N E D 🔨")
       .setFooter(message.author.tag)
-      .setDescription(`Kicked ${kickedUsers} users for \`${reason}\``)
+      .setDescription(`Banned ${bannedUsers} users for \`${reason}\``)
       .addField(
-        "Kicked users",
+        "Banned users",
         members.map((member) => member?.user.tag).join("\n")
       )
       .setColor("RANDOM");
 
-    if (couldntKick.length)
-      embed.addField("Failed to kick", couldntKick.join("\n"));
+    if (couldntBan.length)
+      embed.addField("Failed to ban", couldntBan.join("\n"));
 
     return message.channel.send(embed);
   },

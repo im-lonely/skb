@@ -1,6 +1,6 @@
 import Discord from "discord.js";
-import Command from "../Command";
-import parseUsers from "../utils/parseUsers";
+import Command from "../Type.Command";
+import parseUsers from "../utils/Parse.User";
 
 export default {
   name: "userinfo",

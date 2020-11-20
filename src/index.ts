@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import Discord from "discord.js";
 import { token, prefix } from "./config.json";
-import Command from "./Command";
+import Command from "./Type.Command";
 
 const failsRef = {
   current: 0,
