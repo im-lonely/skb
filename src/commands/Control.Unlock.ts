@@ -1,19 +1,20 @@
+import Discord from "discord.js";
 import failsRef from "..";
 import Command from "../Type.Command";
 import parseChannels from "../utils/Parse.Channels";
 
 export default {
-  name: "lock",
-  aliases: ["disable"],
+  name: "unlock",
+  aliases: ["enable"],
   args: false,
-  usage: "[channel]",
-  description: "Locks a channel, to unlock it use the unlock command.",
+  usage: "<channel>",
+  description: "Unlocks a locked channel.",
   execute(message, args, client) {
     if (!message.member?.hasPermission("MANAGE_CHANNELS")) return;
 
-    const channel = parseChannels(args, message)[0] || message.channel;
+    const channel = parseChannels(args, message)[0];
 
-    if (channel.type !== "text") return;
+    if (!channel) return message.channel.send("Channel not found!");
 
     message.guild?.roles.cache.forEach((role) => {
       channel
@@ -22,7 +23,7 @@ export default {
           [
             {
               id: role.id,
-              deny: ["SEND_MESSAGES"],
+              allow: ["SEND_MESSAGES"],
             },
           ],
           `Requested by ${message.author.id}`
