@@ -46,10 +46,7 @@ export default {
             );
           }, time);
         });
-    } else
-      return message.channel.send(
-        "The `Muted` role was not found. Restart the bot to setup it up again."
-      );
+    } else return message.channel.send("The `Muted` role was not found.");
 
     const embed = new Discord.MessageEmbed()
       .setTitle("🤐 M U T E D 🤐")
