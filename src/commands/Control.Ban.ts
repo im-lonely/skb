@@ -5,7 +5,7 @@ import failsRef from "..";
 
 export default {
   name: "ban",
-  aliases: ["hammer"],
+  aliases: ["hammer", "banana"],
   args: true,
   usage: "<members> [reason]",
   description: "Ban users for the specified reason. Default reason is `None`.",
@@ -18,7 +18,6 @@ export default {
 
     const reason = args.slice(members.length).join(" ") || "None";
 
-    let bannedUsers = 0;
     let couldntBan: string[] = [];
 
     members.forEach((member) => {

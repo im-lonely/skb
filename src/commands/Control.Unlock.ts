@@ -5,7 +5,7 @@ import parseChannels from "../utils/Parse.Channels";
 
 export default {
   name: "unlock",
-  aliases: ["enable"],
+  aliases: ["enable", "freedom"],
   args: false,
   usage: "<channel>",
   description: "Unlocks a locked channel.",

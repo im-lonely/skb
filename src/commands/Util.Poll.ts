@@ -6,7 +6,7 @@ import parseTrim from "../utils/Parse.Trim";
 
 export default {
   name: "poll",
-  aliases: [],
+  aliases: ["ask", "question"],
   args: true,
   usage: "<channel> | <poll> | <options> | <time>",
   description:

@@ -5,7 +5,7 @@ import failsRef from "..";
 
 export default {
   name: "tempban",
-  aliases: ["temphammer"],
+  aliases: ["temphammer", "timedban", "timeban", "timeout"],
   args: true,
   usage: "<members> <days> [reason]",
   description:

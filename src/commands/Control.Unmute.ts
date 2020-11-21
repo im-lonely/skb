@@ -5,7 +5,7 @@ import failsRef from "..";
 
 export default {
   name: "unmute",
-  aliases: ["unshut"],
+  aliases: ["unshut", "unzip"],
   args: true,
   usage: "<members> [reason]",
   description:

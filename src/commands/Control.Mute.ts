@@ -6,7 +6,7 @@ import ms from "ms";
 
 export default {
   name: "mute",
-  aliases: ["shut"],
+  aliases: ["shut", "quiet", "zip"],
   args: true,
   usage: "<members> <time> [reason]",
   description:

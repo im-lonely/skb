@@ -5,7 +5,7 @@ import failsRef from "..";
 
 export default {
   name: "softban",
-  aliases: ["softhammer"],
+  aliases: ["softhammer", "banananana"],
   args: true,
   usage: "<members> [reason]",
   description:

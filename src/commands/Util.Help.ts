@@ -47,7 +47,7 @@ export default {
       new Discord.MessageEmbed()
         .setTitle(`Info for ${command.name}`)
         .setDescription(
-          `Arguments wrapped in \`<>\` are required and arguments wrapped in \`[]\` are optional.`
+          `Arguments wrapped in \`<>\` are required and arguments wrapped in \`[]\` are optional.\nArguments separated by \`|\` indicates separate prompts.`
         )
         .addField("Aliases", command.aliases.join("\n"))
         .addField("Description", command.description)

@@ -5,7 +5,7 @@ import failsRef from "..";
 
 export default {
   name: "unban",
-  aliases: ["unhammer"],
+  aliases: ["unhammer", "revoke"],
   args: true,
   usage: "<members> <reason>",
   description: "Unban users for the specified reason. The reason is required.",

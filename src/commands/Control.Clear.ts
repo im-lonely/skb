@@ -3,7 +3,7 @@ import Command from "../Type.Command";
 
 export default {
   name: "clear",
-  aliases: ["purge", "clean"],
+  aliases: ["purge", "clean", "wipe"],
   args: true,
   usage: "<amount>",
   description: "Cleans the current channel by clearing messages.",
