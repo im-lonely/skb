@@ -38,7 +38,11 @@ export default {
     const embed = new Discord.MessageEmbed()
       .setTitle("🍌 S O F T B A N N E D 🍌")
       .setFooter(message.author.tag)
-      .setDescription(`Softbanned ${members.length} users for \`${reason}\``)
+      .setDescription(
+        `Softbanned ${members.length} ${
+          members.length === 1 ? "user" : "users"
+        } for \`${reason}\``
+      )
       .addField(
         "Softbanned users",
         members.map((member) => member?.user.tag).join("\n")

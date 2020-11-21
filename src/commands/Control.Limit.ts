@@ -22,8 +22,8 @@ export default {
     if (Number.isNaN(seconds) || seconds === null)
       return message.channel.send("That's not a number.");
 
-    if (seconds < 2)
-      return message.channel.send("Enter an amount greater than 1");
+    if (seconds < 0)
+      return message.channel.send("Enter an amount greater than 0.");
 
     message.channel
       //@ts-ignore – This method exists, checked index.d.ts

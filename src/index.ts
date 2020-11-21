@@ -1,7 +1,7 @@
+import Discord from "discord.js";
 import fs from "fs";
 import path from "path";
-import Discord from "discord.js";
-import { token, prefix } from "./config.json";
+import { prefix, token } from "./config.json";
 import Command from "./Type.Command";
 
 const failsRef = {
@@ -74,14 +74,14 @@ client.on("message", async (message) => {
     if (!commandName) return;
 
     const command: Command =
-      client.commands.find((cmd) => cmd.aliases.includes(commandName)) ||
-      client.commands.get(commandName);
+      client.commands.get(commandName) ||
+      client.commands.find((cmd) => cmd.aliases.includes(commandName));
 
     if (!command) return;
 
     if (command.args && !args.length) {
       return message.channel.send(
-        `Usage of \`${command.name}\` would be \`${command.usage}\``
+        `The usage of \`${command.name}\` is \`${command.usage}\`. Use \`${prefix}help ${command.name}\` for more info.`
       );
     }
 
@@ -89,9 +89,7 @@ client.on("message", async (message) => {
       command.execute(message, args, client);
     } catch (err) {
       console.error(err);
-      message.reply(
-        "Something went wrong! Contact `[Cursors]#9257` for troubleshooting!"
-      );
+      message.channel.send("Something went wrong!");
     }
   }
 });

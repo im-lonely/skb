@@ -30,7 +30,11 @@ export default {
     const embed = new Discord.MessageEmbed()
       .setTitle("👢 K I C K E D 👢")
       .setFooter(message.author.tag)
-      .setDescription(`Kicked ${members.length} users for \`${reason}\``)
+      .setDescription(
+        `Kicked ${members.length} ${
+          members.length === 1 ? "user" : "users"
+        } for \`${reason}\``
+      )
       .addField(
         "Kicked users",
         members.map((member) => member?.user.tag).join("\n")

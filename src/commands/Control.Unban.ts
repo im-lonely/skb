@@ -32,7 +32,11 @@ export default {
     const embed = new Discord.MessageEmbed()
       .setTitle("⚒️ U N B A N N E D ⚒️")
       .setFooter(message.author.tag)
-      .setDescription(`Unbanned ${members.length} users for \`${reason}\``)
+      .setDescription(
+        `Unbanned ${members.length} ${
+          members.length === 1 ? "user" : "users"
+        } for \`${reason}\``
+      )
       .addField(
         "Unbanned users",
         members.map((member) => member?.user.tag).join("\n")

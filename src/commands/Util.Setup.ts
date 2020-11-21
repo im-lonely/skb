@@ -59,5 +59,7 @@ export default {
 
       muted.setPosition(3, { reason: "Override permissions" });
     }
+
+    message.channel.send("Mute role set!");
   },
 } as Command;

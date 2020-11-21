@@ -35,7 +35,11 @@ export default {
     const embed = new Discord.MessageEmbed()
       .setTitle("😐 U N M U T E D 😐")
       .setFooter(message.author.tag)
-      .setDescription(`Unmuted ${members.length} users for \`${reason}\``)
+      .setDescription(
+        `Unmuted ${members.length} ${
+          members.length === 1 ? "user" : "users"
+        } for \`${reason}\``
+      )
       .addField(
         "Unmuted users",
         members.map((member) => member?.user.tag).join("\n")
