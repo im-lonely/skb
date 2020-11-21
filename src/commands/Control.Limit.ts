@@ -7,7 +7,7 @@ export default {
   args: true,
   usage: "<seconds> [reason]",
   description: "Sets a slowmode in seconds. Default reason is `None`",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     if (!message.member?.hasPermission("MANAGE_CHANNELS")) return;
 
     const seconds = Number(args[0]);

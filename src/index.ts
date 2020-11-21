@@ -138,7 +138,7 @@ client.on("message", async (message) => {
               "MANAGE_GUILD",
             ])),
         {
-          max: 1,
+          maxProcessed: 1,
           time: 5000,
         }
       )

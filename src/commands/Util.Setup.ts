@@ -7,13 +7,15 @@ export default {
   usage: "",
   description:
     "Sets up the bot and guild so that the bot can function properly.",
-  execute(message, args, client) {
-    /* Set up mute role */
+  async execute(message, args, client) {
+    if (!message.member?.hasPermission("ADMINISTRATOR")) return;
+
     if (
       !client.guilds.cache
         .get("773486815457574913")
         ?.roles.cache.find((r) => r.name === "Muted")
     ) {
+      /* Set up mute role */
       client.guilds.cache
         .get("773486815457574913")
         ?.roles.create({

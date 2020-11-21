@@ -10,7 +10,7 @@ export default {
   usage: "<members> <days> [reason]",
   description:
     "Ban users for the specified reason, for a set amount of days. Default reason is `None`.",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     if (!message.member?.hasPermission("BAN_MEMBERS")) return;
 
     const members = parseMembers(args, message);

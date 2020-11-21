@@ -11,7 +11,7 @@ export default {
   args: false,
   usage: "[field]",
   description: "Displays general information about the bot.",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     const fields: {
       name: string;
       title?: string;

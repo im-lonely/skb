@@ -7,7 +7,7 @@ export default {
   args: true,
   usage: "<amount>",
   description: "Cleans the current channel by clearing messages.",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     if (!message.member?.hasPermission("MANAGE_MESSAGES")) return;
 
     const amount = Number(args[0]);

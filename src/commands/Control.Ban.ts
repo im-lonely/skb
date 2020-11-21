@@ -9,7 +9,7 @@ export default {
   args: true,
   usage: "<members> [reason]",
   description: "Ban users for the specified reason. Default reason is `None`.",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     if (!message.member?.hasPermission("BAN_MEMBERS")) return;
 
     const members = parseMembers(args, message);

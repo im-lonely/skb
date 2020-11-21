@@ -9,7 +9,7 @@ export default {
   args: false,
   usage: "<channel>",
   description: "Unlocks a locked channel.",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     if (!message.member?.hasPermission("MANAGE_CHANNELS")) return;
 
     const channel = parseChannels(args, message)[0];

@@ -11,7 +11,7 @@ export default {
   usage: "<members> <time> [reason]",
   description:
     "Mute users for the specified reason and for an amount of time. Default reason is `None`.",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     if (!message.member?.hasPermission("KICK_MEMBERS")) return;
 
     const members = parseMembers(args, message);

@@ -8,7 +8,7 @@ export default {
   args: false,
   usage: "[user]",
   description: "Displays general user info",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     const user = parseUsers(args, message)[0] || message.author;
     return message.channel.send(
       new Discord.MessageEmbed()

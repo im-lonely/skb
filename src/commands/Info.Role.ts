@@ -10,7 +10,7 @@ export default {
   args: true,
   usage: "<role>",
   description: "Displays general role info.",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     const role = parseRoles(args, message)[0];
     if (!role) return message.channel.send("Role not found!");
     return message.channel.send(

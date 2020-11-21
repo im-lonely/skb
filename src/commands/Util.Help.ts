@@ -10,7 +10,7 @@ export default {
   usage: "[command]",
   description:
     "Displays all commands and info on a specific command if specified.",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     const { commands } = client;
 
     if (!args.length) {

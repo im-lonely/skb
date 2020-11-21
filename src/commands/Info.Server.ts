@@ -8,7 +8,7 @@ export default {
   args: false,
   usage: "",
   description: "Displays general server info.",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     const { guild } = message;
     const channels = message.guild?.channels.cache.filter(
       (c) => c.type !== "category"

@@ -9,7 +9,7 @@ export default {
   args: true,
   usage: "<members> [reason]",
   description: "Kick users for the specified reason. Default reason is `None`.",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     if (!message.member?.hasPermission("KICK_MEMBERS")) return;
 
     const members = parseMembers(args, message);

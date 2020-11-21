@@ -8,7 +8,7 @@ export default {
   args: false,
   usage: "[channel]",
   description: "Locks a channel, to unlock it use the unlock command.",
-  execute(message, args, client) {
+  async execute(message, args, client) {
     if (!message.member?.hasPermission("MANAGE_CHANNELS")) return;
 
     const channel = parseChannels(args, message)[0] || message.channel;
