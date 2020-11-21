@@ -18,25 +18,19 @@ export default {
 
     const reason = args.slice(members.length).join(" ") || "None";
 
-    let kickedUsers = 0;
     let couldntKick: string[] = [];
 
     members.forEach((member) => {
-      member
-        ?.kick(reason)
-        .then(() => {
-          kickedUsers++;
-        })
-        .catch(() => {
-          failsRef.current++;
-          couldntKick.push(member.user.tag);
-        });
+      member?.kick(reason).catch(() => {
+        failsRef.current++;
+        couldntKick.push(member.user.tag);
+      });
     });
 
     const embed = new Discord.MessageEmbed()
       .setTitle("👢 K I C K E D 👢")
       .setFooter(message.author.tag)
-      .setDescription(`Kicked ${kickedUsers} users for \`${reason}\``)
+      .setDescription(`Kicked ${members.length} users for \`${reason}\``)
       .addField(
         "Kicked users",
         members.map((member) => member?.user.tag).join("\n")

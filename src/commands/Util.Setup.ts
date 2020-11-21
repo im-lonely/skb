@@ -10,12 +10,9 @@ export default {
   async execute(message, args, client) {
     if (!message.member?.hasPermission("ADMINISTRATOR")) return;
 
-    if (
-      !client.guilds.cache
-        .get("773486815457574913")
-        ?.roles.cache.find((r) => r.name === "Muted")
-    ) {
-      /* Set up mute role */
+    /* Set up mute role */
+
+    if (!message.guild?.roles.cache.find((r) => r.name === "Muted")) {
       client.guilds.cache
         .get("773486815457574913")
         ?.roles.create({
@@ -28,37 +25,37 @@ export default {
           reason: "Set up muted role",
         })
         .then((role) => {
-          client.guilds.cache
-            .get("773486815457574913")
-            ?.channels.cache.forEach((c) => {
-              c.overwritePermissions([
-                {
-                  id: role.id,
-                  deny: ["SEND_MESSAGES"],
-                },
-              ]);
-            });
+          message.guild?.channels.cache.forEach((c) => {
+            c.overwritePermissions([
+              {
+                id: role.id,
+                deny: ["SEND_MESSAGES"],
+              },
+            ]);
+          });
+
+          role.hoist = false;
+          role.mentionable = false;
 
           role.setPosition(3, { reason: "Override permissions" });
         });
     } else {
-      const muted = client.guilds.cache
-        .get("773486815457574913")
-        ?.roles.cache.find((r) => r.name === "Muted")!;
+      const muted = message.guild?.roles.cache.find((r) => r.name === "Muted")!;
 
-      client.guilds.cache
-        .get("773486815457574913")
-        ?.channels.cache.forEach((c) => {
-          c.overwritePermissions(
-            [
-              {
-                id: muted.id,
-                deny: ["SEND_MESSAGES"],
-              },
-            ],
-            "Set up muted role"
-          );
-        });
+      message.guild?.channels.cache.forEach((c) => {
+        c.overwritePermissions(
+          [
+            {
+              id: muted.id,
+              deny: ["SEND_MESSAGES"],
+            },
+          ],
+          "Set up muted role"
+        );
+      });
+
+      muted.hoist = false;
+      muted.mentionable = false;
 
       muted.setPosition(3, { reason: "Override permissions" });
     }

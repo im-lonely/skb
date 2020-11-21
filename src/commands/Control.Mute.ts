@@ -22,16 +22,12 @@ export default {
 
     const reason = args.slice(members.length + 1).join(" ") || "None";
 
-    let mutedUsers = 0;
     let couldntMute: string[] = [];
 
     if (message.guild?.roles.cache.find((r) => r.name === "Muted")) {
       members.forEach((member) => {
         member?.roles
           .add(message.guild?.roles.cache.find((r) => r.name === "Muted")!)
-          .then(() => {
-            mutedUsers++;
-          })
           .catch(() => {
             failsRef.current++;
             couldntMute.push(member.user.tag);
@@ -52,7 +48,7 @@ export default {
       .setTitle("🤐 M U T E D 🤐")
       .setFooter(message.author.tag)
       .setDescription(
-        `Muted ${mutedUsers} users for \`${reason}\`${
+        `Muted ${members.length} users for \`${reason}\`${
           time
             ? ""
             : "\nYour time could not be parse so instead the users have been muted indefinitely."

@@ -16,7 +16,7 @@ export default {
     return message.channel.send(
       new Discord.MessageEmbed()
         .setTitle(guild?.name)
-        .setImage(guild?.iconURL()!)
+        .setThumbnail(guild?.iconURL()!)
         .setDescription(guild?.description || "No description")
         .addField("Members", guild?.memberCount || "Not found")
         .addField(

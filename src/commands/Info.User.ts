@@ -10,10 +10,11 @@ export default {
   description: "Displays general user info",
   async execute(message, args, client) {
     const user = parseUsers(args, message)[0] || message.author;
+
     return message.channel.send(
       new Discord.MessageEmbed()
         .setTitle(user.username)
-        .setImage(user.displayAvatarURL())
+        .setThumbnail(user.displayAvatarURL())
         .setDescription(`Status: \`${user.presence.status}\``)
         .addField("Username", user.username, true)
         .addField("Tag", user.tag, true)

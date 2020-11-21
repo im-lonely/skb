@@ -21,7 +21,6 @@ export default {
 
     const reason = args.slice(members.length).join(" ") || "None";
 
-    let tempbannedUsers = 0;
     let couldntTempban: string[] = [];
 
     members.forEach((member) => {
@@ -29,9 +28,6 @@ export default {
         ?.ban({
           reason,
           days,
-        })
-        .then(() => {
-          tempbannedUsers++;
         })
         .catch(() => {
           failsRef.current++;
@@ -42,7 +38,7 @@ export default {
     const embed = new Discord.MessageEmbed()
       .setTitle("⌛ T E M P B A N N E D ⌛")
       .setFooter(message.author.tag)
-      .setDescription(`Tempbanned ${tempbannedUsers} users for \`${reason}\``)
+      .setDescription(`Tempbanned ${members.length} users for \`${reason}\``)
       .addField(
         "Tempbanned users",
         members.map((member) => member?.user.tag).join("\n")

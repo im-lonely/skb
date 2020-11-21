@@ -19,7 +19,6 @@ export default {
 
     const reason = args.slice(members.length).join(" ") || "None";
 
-    let softbannedUsers = 0;
     let couldntSoftban: string[] = [];
 
     members.forEach((member) => {
@@ -29,7 +28,6 @@ export default {
         })
         .then(() => {
           message.guild?.members.unban(member.id);
-          softbannedUsers++;
         })
         .catch(() => {
           failsRef.current++;
@@ -40,7 +38,7 @@ export default {
     const embed = new Discord.MessageEmbed()
       .setTitle("🍌 S O F T B A N N E D 🍌")
       .setFooter(message.author.tag)
-      .setDescription(`Softbanned ${softbannedUsers} users for \`${reason}\``)
+      .setDescription(`Softbanned ${members.length} users for \`${reason}\``)
       .addField(
         "Softbanned users",
         members.map((member) => member?.user.tag).join("\n")

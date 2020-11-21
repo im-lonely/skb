@@ -26,9 +26,6 @@ export default {
         ?.ban({
           reason,
         })
-        .then(() => {
-          bannedUsers++;
-        })
         .catch(() => {
           failsRef.current++;
           couldntBan.push(member.user.tag);
@@ -38,7 +35,7 @@ export default {
     const embed = new Discord.MessageEmbed()
       .setTitle("🔨 B A N N E D 🔨")
       .setFooter(message.author.tag)
-      .setDescription(`Banned ${bannedUsers} users for \`${reason}\``)
+      .setDescription(`Banned ${members.length} users for \`${reason}\``)
       .addField(
         "Banned users",
         members.map((member) => member?.user.tag).join("\n")

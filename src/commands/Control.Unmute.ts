@@ -19,16 +19,12 @@ export default {
 
     const reason = args.slice(members.length).join(" ") || "None";
 
-    let unmutedUsers = 0;
     let couldntUnmute: string[] = [];
 
     if (message.guild?.roles.cache.find((r) => r.name === "Muted"))
       members.forEach((member) => {
         member?.roles
           .remove(message.guild?.roles.cache.find((r) => r.name === "Muted")!)
-          .then(() => {
-            unmutedUsers++;
-          })
           .catch(() => {
             failsRef.current++;
             couldntUnmute.push(member.user.tag);
@@ -39,7 +35,7 @@ export default {
     const embed = new Discord.MessageEmbed()
       .setTitle("😐 U N M U T E D 😐")
       .setFooter(message.author.tag)
-      .setDescription(`Unmuted ${unmutedUsers} users for \`${reason}\``)
+      .setDescription(`Unmuted ${members.length} users for \`${reason}\``)
       .addField(
         "Unmuted users",
         members.map((member) => member?.user.tag).join("\n")

@@ -20,25 +20,19 @@ export default {
 
     if (!reason) return message.channel.send("You must specify a reason!");
 
-    let unbannedUsers = 0;
     let couldntUnban: string[] = [];
 
     members.forEach((member) => {
-      message.guild?.members
-        .unban(member?.id!, reason)
-        .then(() => {
-          unbannedUsers++;
-        })
-        .catch(() => {
-          failsRef.current++;
-          couldntUnban.push(member?.user.tag!);
-        });
+      message.guild?.members.unban(member?.id!, reason).catch(() => {
+        failsRef.current++;
+        couldntUnban.push(member?.user.tag!);
+      });
     });
 
     const embed = new Discord.MessageEmbed()
       .setTitle("⚒️ U N B A N N E D ⚒️")
       .setFooter(message.author.tag)
-      .setDescription(`Unbanned ${unbannedUsers} users for \`${reason}\``)
+      .setDescription(`Unbanned ${members.length} users for \`${reason}\``)
       .addField(
         "Unbanned users",
         members.map((member) => member?.user.tag).join("\n")
