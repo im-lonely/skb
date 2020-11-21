@@ -32,5 +32,7 @@ export default {
           failsRef.current++;
         });
     });
+
+    message.channel.send("Unlocked!");
   },
 } as Command;

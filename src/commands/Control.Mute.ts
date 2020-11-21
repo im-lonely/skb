@@ -50,7 +50,7 @@ export default {
       .setDescription(
         `Muted ${members.length} users for \`${reason}\`${
           time
-            ? ""
+            ? ` for ${args.slice(members.length, members.length + 1)[0]}`
             : "\nYour time could not be parse so instead the users have been muted indefinitely."
         }`
       )

@@ -31,5 +31,7 @@ export default {
           failsRef.current++;
         });
     });
+
+    message.channel.send(`Locked!`);
   },
 } as Command;

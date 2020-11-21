@@ -14,11 +14,12 @@ export default {
 
     const reason = args.slice(1).join(" ") || "None";
 
-    if (args[0] === "off")
+    if (args[0] === "off") {
+      message.channel.send("Slowmode was turned off!");
       //@ts-ignore – This method exists, checked index.d.ts
       return message.channel.setRateLimitPerUser(0, reason);
-
-    if (Number.isNaN(seconds) || !seconds || seconds === null)
+    }
+    if (Number.isNaN(seconds) || seconds === null)
       return message.channel.send("That's not a number.");
 
     if (seconds < 2)

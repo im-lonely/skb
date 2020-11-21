@@ -54,7 +54,7 @@ export default {
           },
           {
             name: "Fails",
-            value: failsRef.toString(),
+            value: failsRef.current.toString(),
             inline: false,
           },
         ],
@@ -176,7 +176,7 @@ export default {
               : undefined,
         },
       })
-        .setDescription(`Displaying info for the field ${field.name}`)
+        .setDescription(`Displaying info for the field \`${field.name}\``)
         .setColor("RANDOM")
         .setFooter(client.user?.tag)
         .setTimestamp(message.createdAt)

@@ -12,16 +12,16 @@ export default {
   description: "Displays general role info.",
   async execute(message, args, client) {
     const role = parseRoles(args, message)[0];
+
     if (!role) return message.channel.send("Role not found!");
+
     return message.channel.send(
       new Discord.MessageEmbed()
         .setTitle(role.name)
-        .setDescription(
-          parseTrim(role.members.map((m) => m.user.username).join("\n"), 2048)
-        )
+        .addField("Members", role.members.size)
         .addField("Mentionable", role.mentionable, true)
         .addField("Hoisted", role.hoist, true)
-        .addField("Color", role.color)
+        .addField("Color", role.hexColor)
         .addField("Id", role.id, true)
         .addField("Role created", role.createdAt, true)
         .addField("Permissions Integer", role.permissions.bitfield)
