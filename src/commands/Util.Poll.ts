@@ -66,8 +66,8 @@ export default {
     if (time > ms("1d"))
       return message.channel.send("The time cannot be more than one day!");
 
-    // if (time < ms("1m"))
-    // return message.channel.send("The time must be more than one minute!");
+    if (time < ms("1m"))
+      return message.channel.send("The time must be more than one minute!");
 
     const poll = await channel.send(
       new Discord.MessageEmbed()
