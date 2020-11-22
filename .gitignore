@@ -1,3 +1,5 @@
+config.*
+
 # Logs
 logs
 *.log
@@ -114,7 +116,3 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-
-# custom
-
-config.json
