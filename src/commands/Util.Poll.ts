@@ -74,7 +74,7 @@ export default {
         .setTitle(parseTrim(question, 256))
         .setDescription(
           `Poll created by ${message.author.tag}.\nLasts for ${
-            time / 1000
+            time / 60000
           } minutes.`
         )
         .addField("Question", question)
