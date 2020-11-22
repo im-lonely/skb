@@ -32,8 +32,12 @@ export default {
         //@ts-ignore – This command is only used in a guild
         message.channel.bulkDelete(leftOver);
       })
-      .then(() => {
-        message.channel.send(`I have deleted ${amount} messages!`);
+      .then(async () => {
+        message.channel.send(`I have deleted ${amount} messages!`).then((msg) =>
+          msg.delete({
+            timeout: 1000,
+          })
+        );
       })
       .catch(() => {
         failsRef.current++;
