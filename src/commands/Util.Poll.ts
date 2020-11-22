@@ -7,10 +7,10 @@ import parseTrim from "../utils/Parse.Trim";
 export default {
   name: "poll",
   aliases: ["ask", "question"],
-  args: true,
+  args: false,
   usage: "<channel> | <poll> | <options> | <time>",
   description:
-    "Set up a simple poll with the question, options, and time. 10 options max, 1 day time max.",
+    "Set up a simple poll with the question, options, and time. 10 options max, 1 day time max, 1 minute time minimum.",
   async execute(message, args, client) {
     if (!message.member?.hasPermission("ADMINISTRATOR")) return;
 
@@ -61,25 +61,21 @@ export default {
       ) || ""
     );
 
-    if (!time || time > ms("1d"))
-      return message.channel.send(
-        "The time cannot be more than one day and you must specify a correct time!"
-      );
+    if (!time) return message.channel.send("The time could not be parsed!");
 
-    // const poll = await channel?.send(
-    //   `**${question}**\n${options.map((o, i) => numbers[i] + " – " + o)}`
-    // );
+    if (time > ms("1d"))
+      return message.channel.send("The time cannot be more than one day!");
 
-    const date = new Date(ms(time));
-    const h = date.getHours();
-    const m = date.getMinutes();
-    const s = date.getSeconds();
+    // if (time < ms("1m"))
+    // return message.channel.send("The time must be more than one minute!");
 
     const poll = await channel.send(
       new Discord.MessageEmbed()
         .setTitle(parseTrim(question, 256))
         .setDescription(
-          `Poll created by ${message.author.tag}.\nLasts for ${h} hours, ${m} minutes, and ${s} seconds.`
+          `Poll created by ${message.author.tag}.\nLasts for ${
+            time / 1000
+          } minutes.`
         )
         .addField("Question", question)
         .addField(
@@ -93,14 +89,14 @@ export default {
 
     const emojiNumberMap: any = {};
 
-    numbers.slice(options?.length).forEach(async (n) => {
+    numbers.slice(0, options?.length).forEach(async (n) => {
       const r = await poll.react(n);
       emojiNumberMap[r.emoji.name] = n;
     });
 
     const collected = (
       await poll.awaitReactions((r) => numbers.includes(r.emoji.name), {
-        time,
+        time: time,
       })
     ).array();
 
@@ -129,9 +125,7 @@ export default {
         .setDescription(question)
         .addField(
           "Closed",
-          `This poll is closed.\nThe poll took place from \`${
-            message.createdAt
-          }\` to \`${new Date()}\`.\nCheck the results!`
+          `This poll is closed.\n\nThe poll took place from \n\`${message.createdAt.toLocaleTimeString()}\`\nto\n\`${new Date().toLocaleTimeString()}\`.\nCheck the results!`
         )
         .addField("Results", mosts.join("\n"))
         .setColor("RANDOM")
